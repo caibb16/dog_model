@@ -19,13 +19,6 @@ source install/setup.bash
 ros2 launch DOG gazebo_simple.launch.py
 ```
 
-## 详细文档
-
-- � **快速入门**: [`QUICKSTART.md`](QUICKSTART.md) - 5分钟上手指南
-- � **详细指南**: [`GAZEBO_HARMONIC_GUIDE.md`](GAZEBO_HARMONIC_GUIDE.md) - 完整使用说明
-- 📂 **项目结构**: [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md) - 文件组织说明
-- 🔧 **故障排除**: [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) - 常见问题解决
-- ⚡ **快速参考**: [`CHEATSHEET.md`](CHEATSHEET.md) - 常用命令速查
 
 ## 机器人规格
 
