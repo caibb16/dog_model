@@ -1,6 +1,8 @@
 import launch
 import launch_ros
 from ament_index_python.packages import get_package_share_directory
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration
 
 
 def generate_launch_description():
@@ -18,12 +20,17 @@ def generate_launch_description():
         name='model', default_value=str(default_model_path),
         description='URDF 的绝对路径')
     
+    # 是否启动 RViz2 的参数（默认关闭，防止库冲突）
+    action_declare_arg_rviz = launch.actions.DeclareLaunchArgument(
+        name='rviz', default_value='false',
+        description='是否启动 RViz2（设置为 true 启用）')
+    
 
     # 获取文件内容生成新的参数，将xacro模型文件转换为robot_description参数，提供给robot_state_publisher节点使用
     # xacro可以简化URDF文件
     robot_description = launch_ros.parameter_descriptions.ParameterValue(
         launch.substitutions.Command(
-            ['xacro ', launch.substitutions.LaunchConfiguration('model')]),
+            ['xacro ', LaunchConfiguration('model')]),
         value_type=str)
     
 
@@ -44,16 +51,19 @@ def generate_launch_description():
 
 
     # RViz 节点    启动rviz2  等价于 ros2 run rviz2 rviz2 -d <path_to_config>
-    # arguments 是直接传的格式
+    # 使用 prefix 设置环境变量以修复 libpthread 库冲突
     rviz_node = launch_ros.actions.Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', default_rviz_config_path]
+        arguments=['-d', default_rviz_config_path],
+        condition=IfCondition(LaunchConfiguration('rviz')),
+        prefix='env LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0 QT_QPA_PLATFORM=xcb'
     )
 
     # 返回 LaunchDescription 对象 多节点启动
     return launch.LaunchDescription([
         action_declare_arg_mode_path,
+        action_declare_arg_rviz,
         joint_state_publisher_node,
         robot_state_publisher_node,
         rviz_node
