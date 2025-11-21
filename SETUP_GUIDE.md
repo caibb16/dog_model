@@ -29,24 +29,22 @@ source install/setup.bash
 
 ## 运行机器人
 
-### 1. TF 树可视化（推荐）
+### 1. RViz2 可视化（推荐）
 ```bash
-# 启动机器人状态发布和关节发布
+# 启动机器人状态发布、关节发布和 RViz2 可视化
 ros2 launch DOG display.launch.py
 ```
 
 此模式下：
 - ✅ 机器人 TF 树正常发布
 - ✅ 关节状态发布正常
-- ⚠️ RViz2 默认禁用（避免库冲突）
+- ✅ RViz2 自动启动，显示 3D 模型
 
-### 2. RViz2 可视化（高级）
+### 2. 无 RViz2 模式（纯数据发布）
 ```bash
-# 如果环境支持图形界面，启用 RViz2
-ros2 launch DOG display.launch.py rviz:=true
+# 仅发布 TF 树和关节状态，不启动 RViz2
+ros2 launch DOG display.launch.py rviz:=false
 ```
-
-**注意**：如果出现 `__libc_pthread_init` 错误，这是系统库冲突（snap），不影响功能。
 
 ### 3. Gazebo 物理仿真
 ```bash

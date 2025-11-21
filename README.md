@@ -18,16 +18,16 @@ source install/setup.bash
 
 ### RViz2 可视化（无物理仿真）
 
-**基本运行（仅显示机器人 TF 树）：**
+**启动 RViz2 可视化（推荐）：**
 ```bash
 source install/setup.bash
 ros2 launch DOG display.launch.py
 ```
 
-**启用 RViz2 可视化（推荐）：**
+**如果需要禁用 RViz2（仅显示 TF 树）：**
 ```bash
 source install/setup.bash
-ros2 launch DOG display.launch.py rviz:=true
+ros2 launch DOG display.launch.py rviz:=false
 ```
 
 在 RViz2 中：

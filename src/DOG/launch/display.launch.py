@@ -20,10 +20,10 @@ def generate_launch_description():
         name='model', default_value=str(default_model_path),
         description='URDF 的绝对路径')
     
-    # 是否启动 RViz2 的参数（默认关闭，防止库冲突）
+    # 是否启动 RViz2 的参数（默认启动，可通过 rviz:=false 禁用）
     action_declare_arg_rviz = launch.actions.DeclareLaunchArgument(
-        name='rviz', default_value='false',
-        description='是否启动 RViz2（设置为 true 启用）')
+        name='rviz', default_value='true',
+        description='是否启动 RViz2（设置为 false 禁用）')
     
 
     # 获取文件内容生成新的参数，将xacro模型文件转换为robot_description参数，提供给robot_state_publisher节点使用
